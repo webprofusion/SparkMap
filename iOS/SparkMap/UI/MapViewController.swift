@@ -17,6 +17,7 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self;
         // Do any additional setup after loading the view, typically from a nib.
         
         // set initial location in Honolulu
@@ -61,7 +62,7 @@ class MapViewController: UIViewController {
     }
     
 }
-/*
+
 extension MapViewController: MKMapViewDelegate {
     
     // 1
@@ -78,11 +79,11 @@ extension MapViewController: MKMapViewDelegate {
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 view.canShowCallout = true
                 view.calloutOffset = CGPoint(x: -5, y: 5)
-                view.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIView
+                view.rightCalloutAccessoryView = UIButton(type:.DetailDisclosure) as! UIView
             }
             return view
         }
         return nil
     }
-}*/
+}
 
