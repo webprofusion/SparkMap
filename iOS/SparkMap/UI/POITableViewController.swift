@@ -16,6 +16,7 @@ class POITableViewController: UITableViewController {
         let poiManager =  POIManager();
         poiManager.getData({(plist:POIList!, error:NSError!)-> Void in
             self.poiList=plist!.list! as! Array<OCMChargePoint>
+            SharedAppModel.Context.poiList=plist!.list!;
             print(self.poiList.count);
             self.tableView!.reloadData()
         });
@@ -65,7 +66,7 @@ class POITableViewController: UITableViewController {
         let poi = poiList[indexPath.row];
         
         cell.poiTitle!.text = poi.AddressInfo.Title;
-        cell.poiDistance!.text = String(poi.AddressInfo.Distance);
+        cell.poiDistance!.text = String(poi.AddressInfo.Distance?.description) + poi.AddressInfo.DistanceUnit.debugDescription; //TODO: cope with nil
         cell.poiAddress!.text = poi.AddressInfo.AddressLine1;
         cell.poiStatus!.text = poi.DataProvider.Title;
         

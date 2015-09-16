@@ -155,44 +155,28 @@ struct OCMChargePoint : JSONJoy {
     
 }
 
-enum OCMDistanceUnit {
-    case Miles
-    case KM
+enum OCMDistanceUnit : Int{
+    case Miles=1
+    case KM=2
 }
 
 struct OCMAddressInfo : JSONJoy {
-    var ID: Int
+    var ID: Int?
     var Title :String?
-    
     var AddressLine1:String?
-    
-    
-    var  AddressLine2 :String?
-    
+    var AddressLine2 :String?
     var Town:String?
-    
     var StateOrProvince :String?
-    
-    
     var Postcode :String?
-    
     var CountryID : Int
-    
     var Country: OCMCountry?
-    
     var Latitude : Double
-    
     var Longitude: Double
     var ContactTelephone1 :String?
-    
     var ContactTelephone2 :String?
-    
     var ContactEmail :String?
-    
     var AccessComments :String?
-    
     var RelatedURL:String?
-    
     var Distance :Double?
     var DistanceUnit: OCMDistanceUnit?
     
@@ -204,12 +188,29 @@ struct OCMAddressInfo : JSONJoy {
     }
     
     init(_ decoder: JSONDecoder) {
-        ID = decoder["ID"].integer!
-        Title = decoder["Title"].string!
-        AddressLine1 = decoder["AddressLine1"].string!
+        ID = decoder["ID"].integer
+        Title = decoder["Title"].string
+        AddressLine1 = decoder["AddressLine1"].string
+        AddressLine2 = decoder["AddressLine2"].string
+        Town = decoder["Town"].string
+        Postcode = decoder["Postcode"].string
+        StateOrProvince = decoder["StateOrProvince"].string
         CountryID = decoder["CountryID"].integer!
+        Country = OCMCountry(decoder["Country"])
         Latitude = decoder["Latitude"].double!
         Longitude = decoder["Longitude"].double!
+        ContactTelephone1 = decoder["ContactTelephone1"].string
+        ContactTelephone2 = decoder["ContactTelephone2"].string
+        ContactEmail = decoder["ContactEmail"].string
+        AccessComments = decoder["AccessComments"].string
+        RelatedURL = decoder["RelatedURL"].string
+        Distance = decoder["Distance"].double
+        
+        let distUnit = decoder["DistanceUnit"].integer ;
+        if (distUnit != nil) {
+
+            DistanceUnit = OCMDistanceUnit.init(rawValue:distUnit!)
+        }
         
     }
 }

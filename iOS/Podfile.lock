@@ -1,0 +1,24 @@
+PODS:
+  - FontAwesomeIconFactory (2.1)
+  - JSONJoy-Swift (0.9.3)
+  - RxBlocking (2.0.0-alpha.3):
+    - RxSwift (~> 2.0.0-alpha)
+  - RxCocoa (2.0.0-alpha.3):
+    - RxSwift (~> 2.0.0-alpha)
+  - RxSwift (2.0.0-alpha.3)
+
+DEPENDENCIES:
+  - FontAwesomeIconFactory
+  - JSONJoy-Swift (~> 0.9.1)
+  - RxBlocking (~> 2.0.0-alpha)
+  - RxCocoa (~> 2.0.0-alpha)
+  - RxSwift (~> 2.0.0-alpha)
+
+SPEC CHECKSUMS:
+  FontAwesomeIconFactory: 0be1c4e100bb228ea59645d5b1f8a933b7ebe73a
+  JSONJoy-Swift: 5faf6a7c150264d606627b26d82e89a43f740c77
+  RxBlocking: 0a4086da64fbbc916ac0251252d93f5f4f97ce5a
+  RxCocoa: 2a45f35cd0eb6a01e081b3d11849c2fcb0bdb6de
+  RxSwift: c66f7956b2e5fb397a62bf4a3ec6072749a816a7
+
+COCOAPODS: 0.38.2

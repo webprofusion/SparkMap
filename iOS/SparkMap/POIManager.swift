@@ -58,19 +58,4 @@ class POIManager{
         
     }
     
-    func fetchPOIList()
-    {
-        
-        
-        let url = NSURL(string: "http://api.openchargemap.io/v2/poi/")
-        
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-            
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            
-            
-        }
-        
-        task.resume()
-    }
 }
