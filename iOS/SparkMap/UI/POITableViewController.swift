@@ -12,20 +12,12 @@ class POITableViewController: UITableViewController {
     
     var poiList = [OCMChargePoint]()
     
-    func loadPOIList(){
-        let poiManager =  POIManager();
-        poiManager.getData({(plist:POIList!, error:NSError!)-> Void in
-            self.poiList=plist!.list! as! Array<OCMChargePoint>
-            SharedAppModel.Context.poiList=plist!.list!;
-            print(self.poiList.count);
-            self.tableView!.reloadData()
-        });
-    }
-    func displayPOIResults(plist:POIList?, error:NSError?){
+  
+    func displayPOIResults(){
         
-        poiList=plist!.list! as! Array<OCMChargePoint>
-        print(poiList.count);
+        poiList=SharedAppModel.Context.poiList;
         
+    self.tableView.reloadData();
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +27,7 @@ class POITableViewController: UITableViewController {
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        loadPOIList();
+        displayPOIResults();
     }
     
     override func didReceiveMemoryWarning() {

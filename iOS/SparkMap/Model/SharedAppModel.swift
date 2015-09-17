@@ -14,4 +14,13 @@ class SharedAppModel {
     init(){
         poiList=Array<OCMChargePoint>()
     }
+    func refreshPOIList(){
+        let api = POIManager();
+        api.getData(processPOIList);
+    }
+    
+    func processPOIList(list:POIList!, error:NSError!)
+    {
+        poiList=list!.list!;
+    }
 }
