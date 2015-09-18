@@ -7,20 +7,42 @@
 //
 
 import Foundation
+import RxSwift
 
 class SharedAppModel {
-    var poiList : Array<OCMChargePoint>
-    static let Context = SharedAppModel()
-    init(){
-        poiList=Array<OCMChargePoint>()
-    }
-    func refreshPOIList(){
-        let api = POIManager();
-        api.getData(processPOIList);
-    }
+    var poiList : Observable<[OCMChargePoint]>
+    static let Current = SharedAppModel() //singleton instance SharedAppModel.Current
+  
+    let URLSession = NSURLSession.sharedSession()
+    let backgroundWorkScheduler: ImmediateSchedulerType
+    let mainScheduler: SerialDispatchQueueScheduler
+    let poiManager = POIManager()
     
-    func processPOIList(list:POIList!, error:NSError!)
-    {
-        poiList=list!.list!;
+    private init() {
+      
+        
+        let operationQueue = NSOperationQueue()
+        operationQueue.maxConcurrentOperationCount = 2
+        //if #available(iOS 8.0, *) {
+            operationQueue.qualityOfService = NSQualityOfService.UserInitiated
+        //}=else {
+            // Fallback on earlier versions
+        //
+    
+        backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
+        
+        mainScheduler = MainScheduler.sharedInstance
+        
+        //
+        poiList = Observable<[OCMChargePoint]>()
+        
+        
+
     }
+
+    func refreshPOIList(){
+        
+        self.poiList = SharedAppModel.Current.poiManager.getPOIList()
+    }
+  
 }

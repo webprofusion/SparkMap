@@ -8,12 +8,16 @@
 
 import UIKit
 import MapKit
+import RxSwift
 
 
 class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     let regionRadius: CLLocationDistance = 1000
+    
+    var poiList = Variable([OCMChargePoint]())
+    var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +28,18 @@ class MapViewController: UIViewController {
         let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
         
         centerMapOnLocation(initialLocation)
-        plotMapMarkers();
+        
+        
+        //perform async fetch of POIs for map makers, TOODO: fetch from common observable
+        
+        //SharedAppModel.Current.poiManager.getPOIList()
+            SharedAppModel.Current.poiList
+            .subscribeNext { [unowned self] array in
+                self.poiList.value = array
+                self.plotMapMarkers()
+            }
+            .addDisposableTo(disposeBag)
+
     }
     
     
@@ -38,7 +53,7 @@ class MapViewController: UIViewController {
     {
         var lastPOI = OCMChargePoint();
         
-        let list = SharedAppModel.Context.poiList;
+        let list = poiList.value;
         
         if (list.count>0) {
             //populate map markers
@@ -66,7 +81,7 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
     
     // 1
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if let annotation = annotation as? POIMarker {
             let identifier = "pin"
             var view: MKPinAnnotationView
@@ -79,7 +94,7 @@ extension MapViewController: MKMapViewDelegate {
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 view.canShowCallout = true
                 view.calloutOffset = CGPoint(x: -5, y: 5)
-                view.rightCalloutAccessoryView = UIButton(type:.DetailDisclosure) as! UIView
+                view.rightCalloutAccessoryView = UIButton(type:.DetailDisclosure) as UIView
             }
             return view
         }

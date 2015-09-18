@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class POITableViewController: UITableViewController {
     
-    var poiList = [OCMChargePoint]()
     
+    var poiList = Variable([OCMChargePoint]())
+    var disposeBag = DisposeBag()
+
   
     func displayPOIResults(){
         
-        poiList=SharedAppModel.Context.poiList;
+       // poiList=SharedAppModel.Current.poiList;
         
     self.tableView.reloadData();
     }
@@ -27,7 +31,23 @@ class POITableViewController: UITableViewController {
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        displayPOIResults();
+        
+     
+      
+        /*dataSource.titleForHeaderInSection = { [unowned dataSource] sectionIndex in
+            return dataSource.sectionAtIndex(sectionIndex).model
+        }*/
+        
+        // reactive data source
+    
+        
+        //SharedAppModel.Current.poiManager.getPOIList()
+        SharedAppModel.Current.poiList
+            .subscribeNext { [unowned self] array in
+                self.poiList.value = array
+                self.tableView.reloadData()
+            }
+            .addDisposableTo(disposeBag)
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,7 +64,7 @@ class POITableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return poiList.count
+        return poiList.value.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -55,7 +75,7 @@ class POITableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! POIListItemTableViewCell;
         
-        let poi = poiList[indexPath.row];
+        let poi = poiList.value[indexPath.row];
         
         cell.poiTitle!.text = poi.AddressInfo.Title;
         cell.poiDistance!.text = String(poi.AddressInfo.Distance?.description) + poi.AddressInfo.DistanceUnit.debugDescription; //TODO: cope with nil

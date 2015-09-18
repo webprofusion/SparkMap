@@ -8,8 +8,42 @@
 
 import Foundation
 import JSONJoy
+import RxSwift
+
+enum OCMAPIError: ErrorType
+{
+    case RequestFailed
+}
 
 class POIManager{
+    func getPOIList() -> Observable<[OCMChargePoint]>
+    {
+        let url = NSURL(string: "http://api.openchargemap.io/v2/poi/?client=sparkmap_ios&verbose=false&output=json&latitude=-31.950564399999998&longitude=115.81274359999999&distance=100&distanceunit=Miles&includecomments=true&maxresults=100")!
+        return NSURLSession.sharedSession().rx_JSON(url)
+            .observeOn(SharedAppModel.Current.backgroundWorkScheduler)
+            .map { json in
+                guard let json = json as? [AnyObject] else {
+                    throw OCMAPIError.RequestFailed
+                }
+                
+                
+                
+                let decoder = JSONDecoder(json)
+                //poiList = POIList(JSONDecoder(data!))
+                
+                var collect = Array<OCMChargePoint>()
+                
+                if let poiArray = decoder.array {
+                    
+                    for poiDecoder in poiArray {
+                        collect.append(OCMChargePoint(poiDecoder))
+                    }
+                }
+                return collect;
+            }
+            .observeOn(SharedAppModel.Current.mainScheduler)
+    }
+    
     func getData(completionHandler: ((POIList!, NSError!) -> Void)!) -> Void {
         let url: NSURL? = NSURL(string: "http://api.openchargemap.io/v2/poi/?client=sparkmap_ios&verbose=false&output=json&latitude=-31.950564399999998&longitude=115.81274359999999&distance=100&distanceunit=Miles&includecomments=true&maxresults=100")
         
@@ -23,29 +57,25 @@ class POIManager{
             }
             
             
-            var result:NSArray?
+            
             var poiList = POIList()
-            do{
-                //result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+            
+            let decoder = JSONDecoder(data!)
+            //poiList = POIList(JSONDecoder(data!))
+            
+            var collect = Array<OCMChargePoint>()
+            
+            if let poiArray = decoder.array {
                 
-                var decoder = JSONDecoder(data!)
-                //poiList = POIList(JSONDecoder(data!))
-                
-                var collect = Array<OCMChargePoint>()
-                
-                if let poiArray = decoder.array {
-                    
-                    for poiDecoder in poiArray {
-                        collect.append(OCMChargePoint(poiDecoder))
-                    }
+                for poiDecoder in poiArray {
+                    collect.append(OCMChargePoint(poiDecoder))
                 }
-                
-                poiList.list = collect
-                
-                
-            } catch {
-                //failed
             }
+            
+            poiList.list = collect
+            
+            
+            
             if (error != nil) {
                 return completionHandler(nil, error)
             } else {
