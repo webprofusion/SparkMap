@@ -16,6 +16,7 @@
 		837B43CE1BA5540100B5C21D /* OCMObjectModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B43CD1BA5540100B5C21D /* OCMObjectModels.swift */; };
 		83A2220E1BA9837500589C85 /* SharedAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A2220D1BA9837500589C85 /* SharedAppModel.swift */; };
 		83BC16F61BA4432F002BCDA3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BC16F51BA4432F002BCDA3 /* MapKit.framework */; };
+		83C089B71BAC107F00013CE1 /* POIDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C089B61BAC107F00013CE1 /* POIDetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		83E239CC1BA43A4500F9C1BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E239CB1BA43A4500F9C1BA /* AppDelegate.swift */; };
 		83E239D11BA43A4500F9C1BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83E239CF1BA43A4500F9C1BA /* Main.storyboard */; };
 		83E239D31BA43A4500F9C1BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83E239D21BA43A4500F9C1BA /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		83A2220D1BA9837500589C85 /* SharedAppModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SharedAppModel.swift; path = Model/SharedAppModel.swift; sourceTree = "<group>"; };
 		83BC16F51BA4432F002BCDA3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		83BC16F71BA447F6002BCDA3 /* POIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIManager.swift; sourceTree = "<group>"; };
+		83C089B61BAC107F00013CE1 /* POIDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = POIDetailViewController.swift; path = UI/POIDetailViewController.swift; sourceTree = "<group>"; };
 		83E239C81BA43A4500F9C1BA /* SparkMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SparkMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E239CB1BA43A4500F9C1BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83E239D01BA43A4500F9C1BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				83E239CF1BA43A4500F9C1BA /* Main.storyboard */,
 				837B02221BA6BA9F00A90E82 /* POITableViewController.swift */,
 				837B021F1BA58A3D00A90E82 /* POIListItemTableViewCell.swift */,
+				83C089B61BAC107F00013CE1 /* POIDetailViewController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83299CB81BA9A92B00B55D2E /* POIMarker.swift in Sources */,
+				83C089B71BAC107F00013CE1 /* POIDetailViewController.swift in Sources */,
 				83A2220E1BA9837500589C85 /* SharedAppModel.swift in Sources */,
 				837B02201BA58A3D00A90E82 /* POIListItemTableViewCell.swift in Sources */,
 				83E239CC1BA43A4500F9C1BA /* AppDelegate.swift in Sources */,

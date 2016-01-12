@@ -36,6 +36,7 @@ class MapViewController: UIViewController {
             SharedAppModel.Current.poiList
             .subscribeNext { [unowned self] array in
                 self.poiList.value = array
+                SharedAppModel.Current._poiList.value = array //Hack to get access to simple array in common model
                 self.plotMapMarkers()
             }
             .addDisposableTo(disposeBag)
@@ -60,6 +61,7 @@ class MapViewController: UIViewController {
             for p in list {
                 
                 let poi = POIMarker(
+                    poiId: p.ID,
                     title: p.AddressInfo.Title!,
                     coordinate: CLLocationCoordinate2D(latitude: p.AddressInfo.Latitude, longitude:p.AddressInfo.Longitude)
                 );
@@ -100,5 +102,20 @@ extension MapViewController: MKMapViewDelegate {
         }
         return nil
     }
+    
+    func mapView(MapView: MKMapView!, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        if control == annotationView.rightCalloutAccessoryView {
+            
+            let m = annotationView.annotation as! POIMarker;
+            
+            print("Show details for OCM-"+String(m.poiId));
+            SharedAppModel.Current.selectPOIById(m.poiId);
+            
+            performSegueWithIdentifier("POIDetailsView", sender: self);
+            
+        }
+    }
+    
 }
 

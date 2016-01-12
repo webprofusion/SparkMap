@@ -15,13 +15,13 @@ class POITableViewController: UITableViewController {
     
     var poiList = Variable([OCMChargePoint]())
     var disposeBag = DisposeBag()
-
-  
+    
+    
     func displayPOIResults(){
         
-       // poiList=SharedAppModel.Current.poiList;
+        // poiList=SharedAppModel.Current.poiList;
         
-    self.tableView.reloadData();
+        self.tableView.reloadData();
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,14 +32,17 @@ class POITableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-     
-      
+        
+        
         /*dataSource.titleForHeaderInSection = { [unowned dataSource] sectionIndex in
-            return dataSource.sectionAtIndex(sectionIndex).model
+        return dataSource.sectionAtIndex(sectionIndex).model
         }*/
         
+        
+        tableView.delegate = self;
+        
+        
         // reactive data source
-    
         
         //SharedAppModel.Current.poiManager.getPOIList()
         SharedAppModel.Current.poiList
@@ -58,7 +61,7 @@ class POITableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    
+        
         return 1
     }
     
@@ -68,7 +71,7 @@ class POITableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-       
+        
         
         // Configure the cell...
         let cellIdentifier = "POIListCell";
@@ -83,6 +86,24 @@ class POITableViewController: UITableViewController {
         cell.poiStatus!.text = poi.DataProvider.Title;
         
         return cell;
+    }
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        
+        if(segue.identifier == "POIDetailsView") {
+            
+            var vc = segue.destinationViewController as! POIDetailViewController
+            
+        }
+    }
+    
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        performSegueWithIdentifier("POIDetailsView", sender: self)
     }
     
     
@@ -124,11 +145,7 @@ class POITableViewController: UITableViewController {
     /*
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
+    
     */
     
 }

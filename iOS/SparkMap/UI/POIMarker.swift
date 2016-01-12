@@ -13,13 +13,15 @@ class POIMarker: NSObject, MKAnnotation {
    
     let coordinate: CLLocationCoordinate2D
     let title: String?;
+    let poiId: Int
     
-    init(title: String,  coordinate: CLLocationCoordinate2D) {
+    init(poiId:Int, title: String,  coordinate: CLLocationCoordinate2D) {
        
-        self.coordinate = coordinate
+        self.coordinate = coordinate;
         self.title = title;
+        self.poiId = poiId;
         
-        super.init()
+        super.init();
     }
     
   
